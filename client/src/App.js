@@ -5,7 +5,6 @@ import { Route, Routes } from "react-router-dom";
 import { Host } from "./pages/Host";
 import { Wrapper } from "./pages/Wrapper";
 import { Account } from "./pages/Account";
-import { Post } from "./pages/Post";
 import { useRecoilState } from "recoil";
 import { loginAtom } from "./recoil/atom";
 import LoginModal from "./components/Home/atoms/LoginModal";
@@ -27,7 +26,6 @@ const App = () => {
       <Route index element={<HomeWrapper />} />
       <Route path="account" element={<HomeAccount login={login} />} />
       <Route path="host" element={<Host />} />
-      <Route path="post" element={<Post />} />
       <Route path="*" element={<h1>NotFound</h1>} />
     </Routes>
   );
