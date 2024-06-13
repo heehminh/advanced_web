@@ -51,7 +51,7 @@ export const Post = () => {
           {errors.category && <p>{errors.category.message}</p>}
         </div>
 
-        <div className='mt-5'>
+        <div className='mt-10'>
           <label>가격</label>
           <div className='relative'>
             <input
