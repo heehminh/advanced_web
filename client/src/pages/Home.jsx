@@ -2,15 +2,20 @@ import React from "react";
 import Header from "../components/Home/blocks/Header";
 import "./Home.css";
 import styled from "styled-components";
+import Wrapper from "./Wrapper";
 
 const Home = () => {
   return (
-    <div className="App">
-      <WrapperHeader>
-        <Header />
-        <div className="line"></div>
-      </WrapperHeader>
+    <div>
+      <div className="App">
+        <WrapperHeader>
+          <Header />
+          <div className="line"></div>
+        </WrapperHeader>
+      </div>
+      <Wrapper />
     </div>
+    
   );
 };
 

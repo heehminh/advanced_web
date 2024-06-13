@@ -1,26 +1,10 @@
-import React, { useState, useRef } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
-import MemberModal from "../atoms/MemberModal";
-import NonMemberModal from "../atoms/NonMemberModal";
-import { useRecoilValue } from "recoil";
-import { loginAtom } from "../../../recoil/atom";
 import logo from '../../../app-logo.svg'
 
 const Header = () => {
-  const isLogin = useRecoilValue(loginAtom);
   const navigate = useNavigate();
-  const [showModal, setShowModal] = useState(false);
-
-  const handleOpenModal = () => {
-    setShowModal(true);
-  };
-
-  const modalRef = useRef();
-  useOnClickOutside(modalRef, () => {
-    setShowModal(false);
-  });
 
   return (
     <Wrapper>
@@ -52,7 +36,7 @@ const Header = () => {
         <SettingIcon>
           <SettingIconImg alt="setting" src="../assets/home-setting.png" />
         </SettingIcon>
-        <SettingProfile onClick={handleOpenModal}>
+        <SettingProfile onClick={()=>navigate('../login')}>
           <div>
             <img
               alt="profile list"
@@ -68,11 +52,6 @@ const Header = () => {
             />
           </div>
         </SettingProfile>
-        {showModal && (
-          <HeaderModalWrapper ref={modalRef}>
-            {isLogin ? <MemberModal /> : <NonMemberModal />}
-          </HeaderModalWrapper>
-        )}
       </Setting>
     </Wrapper>
   );
@@ -163,12 +142,4 @@ const SettingProfile = styled.div`
     border-radius: 35px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(0, 0, 0, 0.05);
   }
-`;
-
-const HeaderModalWrapper = styled.div`
-  position: absolute;
-  top: 80px;
-  left: calc((100% - 290px));
-  width: 100%;
-  z-index: 1;
 `;

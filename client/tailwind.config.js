@@ -24,6 +24,7 @@ module.exports = {
         "gray-300": "#DDDDDD",
         "gray-200": "#EEEEEE",
         "gray-100": "#F8F8FA",
+        "logo-sky": "#58CCFF",
       },
     },
   },
