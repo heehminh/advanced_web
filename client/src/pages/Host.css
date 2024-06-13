@@ -1,0 +1,57 @@
+.intro__income__description {
+  margin: 10px 0px 20px 0px;
+  padding: 16px 0px;
+  font-size: 16px;
+  width: 100%;
+  text-align: center;
+  color: black;
+}
+
+.intro__income__description__bold {
+  font-style: bold;
+}
+
+.intro__income__slider {
+  width: 400px;
+  color: black;
+}
+
+@media screen and (max-width: 1400px) {
+  .silder,
+  .intro__income__slider {
+    width: 100%;
+  }
+}
+
+.intro__income__slider:active .intro__income__description {
+  visibility: hidden;
+}
+
+.css-187mznn-MuiSlider-root {
+  color: black !important;
+}
+
+.css-14pt78w-MuiSlider-rail {
+  opacity: 0.18;
+}
+
+.css-nnid7-MuiSlider-valueLabel {
+  width: 80px;
+  height: 50px;
+  background-color: black !important;
+  border-radius: 20px !important;
+  color: white;
+  font-size: 24px;
+}
+
+#intro__map {
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  z-index: 10;
+}
+
+.gmnoprint,
+.gm-svpc {
+  display: none;
+}
