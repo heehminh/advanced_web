@@ -308,11 +308,11 @@ const Intro = () => {
                     </ModalHeader>
                     <ModalBody>
                       <Wrapper>
-                        <h1>
+                        <div className="text-32 font-bold mb-15">
                           에어비앤비가 예상 수입을
                           <br />
                           산정하는 방법
-                        </h1>
+                        </div>
                         <div>
                           에어비앤비는 비슷한 에어비앤비 숙소의 지난 12개월간
                           예약 데이터를 검토하여 예상 수입을 계산합니다. 비슷한

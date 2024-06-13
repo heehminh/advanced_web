@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { categories } from '../../constants/categories'
 
-export const Post = () => {
+export const Post = ({ handleCloseModal }) => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [price, setPrice] = useState('');
   const [selectedImages, setSelectedImages] = useState([]);
@@ -30,7 +30,7 @@ export const Post = () => {
 
   return (
     <div className='flex flex-col w-full justify-center items-center'>
-      <form onSubmit={handleSubmit(onSubmit)} className='p-30 pt-10 rounded-20 text-16 bg-white'>
+      <form onSubmit={handleSubmit(onSubmit)} className='pt-10 rounded-20 text-16 bg-white'>
         <div>
           <label>주소</label>
           <input {...register('address', { required: '주소를 입력하세요' })} className='my-5 border-2 border-gray-200 w-full rounded-5 p-10'/>
@@ -91,7 +91,11 @@ export const Post = () => {
           </div>
         </div>
 
-        <button type="submit" className='mt-10 w-full p-10 bg-sky-200 rounded-8'>숙소 등록하기</button>
+        <button type="submit" 
+          className='mt-10 w-full p-10 bg-sky-200 rounded-8'
+          onClick={handleCloseModal}>
+          숙소 등록하기
+        </button>
       </form>
     </div>
     

@@ -11,6 +11,7 @@ import LoginModal from "../atoms/LoginModal";
 import styled from "styled-components";
 import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 SwiperCore.use([Navigation, Pagination]);
 
@@ -69,6 +70,8 @@ const Article = ({ typeIndex }) => {
     setIsModalOpen(false);
   });
 
+  const navigate = useNavigate();
+
   return (
     <article className="room">
       {roomList && roomList.length > 0 ? (
@@ -77,7 +80,7 @@ const Article = ({ typeIndex }) => {
             room;
 
           return (
-            <div className="room__item" key={id}>
+            <div className="room__item" key={id} onClick={()=>navigate(`/room/${id}`)}>
               <Swiper
                 className="room__item__imgBox"
                 spaceBetween={50}

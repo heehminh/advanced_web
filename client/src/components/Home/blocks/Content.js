@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useQuery } from "react-query";
 import Article from "./Article";
 import Footer from "./Footer";

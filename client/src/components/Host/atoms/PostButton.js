@@ -30,11 +30,11 @@ const ChatButton = () => {
                 <ModalCloseButton onClick={handleCloseModal}>X</ModalCloseButton>
               </ModalHeader>
               <ModalBody>
-                <PostModal />
+                <PostModal handleCloseModal={handleCloseModal} />
               </ModalBody>
             </ModalWrapper>
           </ModalOverlay>
-       )}
+      )}
 
     </Chat>
   );
@@ -82,6 +82,7 @@ const ModalOverlay = styled.div`
 const ModalWrapper = styled.div`
   background-color: white;
   border-radius: 8px;
+  padding: 20px;
 `;
 
 const ModalHeader = styled.div`

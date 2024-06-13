@@ -1,30 +1,21 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./App.css";
 import Home from "./pages/Home";
 import { Route, Routes } from "react-router-dom";
 import { Host } from "./pages/Host";
 import { Wrapper } from "./pages/Wrapper";
 import { Account } from "./pages/Account";
-import { useRecoilState } from "recoil";
-import { loginAtom } from "./recoil/atom";
 import LoginModal from "./components/Home/atoms/LoginModal";
 import styled from "styled-components";
+import { Detail } from "./pages/Detail";
 
 const App = () => {
-  const [login, setLogin] = useRecoilState(loginAtom);
-
-  useEffect(() => {
-    if (login.token) {
-      setLogin((prevLogin) => ({ ...prevLogin, isLoggedIn: true }));
-    } else {
-      setLogin((prevLogin) => ({ ...prevLogin, isLoggedIn: false }));
-    }
-  }, [login.token, setLogin]);
 
   return (
     <Routes>
       <Route index element={<HomeWrapper />} />
-      <Route path="account" element={<HomeAccount login={login} />} />
+      <Route path="/room/:id" element={<Detail />} />
+      <Route path="account" element={<HomeAccount />} />
       <Route path="host" element={<Host />} />
       <Route path="*" element={<h1>NotFound</h1>} />
     </Routes>

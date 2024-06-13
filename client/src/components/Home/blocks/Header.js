@@ -42,7 +42,7 @@ const Header = () => {
         <img
           alt="search-bar"
           id="search-bar-icon"
-          src="./assets/home-search.png"
+          src="../assets/home-search.png"
         />
       </SearchBar>
       <Setting>
@@ -56,14 +56,14 @@ const Header = () => {
           <div>
             <img
               alt="profile list"
-              src="./assets/home-list.png"
+              src="../assets/home-list.png"
               id="profile-list-img"
             />
           </div>
           <div>
             <img
               alt="profile icon"
-              src="./assets/home-my.png"
+              src="../assets/home-my.png"
               id="profile-icon-img"
             />
           </div>
