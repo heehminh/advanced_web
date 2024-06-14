@@ -13,8 +13,8 @@ const App = () => {
     <Routes>
       <Route index element={<Home />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/sign" element={<SignUp />} />
-      <Route path="/room/:id" element={<Detail />} />
+      <Route path="/register" element={<SignUp />} />
+      <Route path="/stay/:id" element={<Detail />} />
       {/* <Route path="account" element={<HomeAccount />} /> */}
       <Route path="host" element={<Host />} />
       <Route path="*" element={<h1>NotFound</h1>} />

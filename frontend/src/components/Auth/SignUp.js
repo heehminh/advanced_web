@@ -1,14 +1,31 @@
-import React from 'react';
+import React , { useState }from 'react';
 import { useForm } from 'react-hook-form';
 import Header from '../Home/blocks/Header';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { useSetRecoilState } from 'recoil';
+import { userState } from '../../recoil/atoms';
+
 
 export const SignUp = () => {
-  const { register, handleSubmit, formState: { errors }, watch } = useForm();
+  const { register, handleSubmit, formState: { errors }, watch, reset } = useForm();
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+  const setUser = useSetRecoilState(userState);
 
-  const onSubmit = data => {
-    console.log('회원가입 데이터:', data);
-    // TODO API
-    alert('회원가입 성공!');
+  const onSubmit = async (data) => {
+    try {
+      const response = await axios.post('http://localhost:3000/auth/register', data);
+      alert(`${data.name}님 회원가입이 성공적으로 완료되었습니다!`);
+      setUser({
+        isAuthenticated: true,
+        user: response.data.user,
+      });
+      reset();
+      navigate('../login');
+    } catch (err) {
+      setError(err.response?.data?.message || '회원가입 실패');
+    }
   };
 
   // 비밀번호 확인용 값 참조
@@ -29,23 +46,6 @@ export const SignUp = () => {
               {...register('name', { required: '이름을 입력하세요' })}
             />
             {errors.name && <p className='text-red-500'>{errors.name.message}</p>}
-          </div>
-
-          <div className='mt-5'>
-            <label>전화번호</label>
-            <input
-              className='my-5 border-2 border-gray-200 w-full rounded-5 p-10'
-              type='text'
-              placeholder='01012345678'
-              {...register('phone', { 
-                required: '전화번호를 입력하세요', 
-                pattern: {
-                  value: /^[0-9]{10,11}$/,
-                  message: '올바른 전화번호를 입력하세요'
-                }
-              })}
-            />
-            {errors.phone && <p className='text-red-500'>{errors.phone.message}</p>}
           </div>
 
           <div className='mt-5'>
@@ -94,6 +94,7 @@ export const SignUp = () => {
             {errors.passwordConfirm && <p className='text-red-500'>{errors.passwordConfirm.message}</p>}
           </div>
 
+          {error && <p>{error}</p>}
           <button 
             type='submit' 
             className='cursor-pointer flex h-45 justify-center items-center mt-15 w-300 rounded-5 border-2 border-logo-sky'

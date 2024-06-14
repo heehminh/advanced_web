@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { categories } from '../../constants/categories'
+import { categories } from '../../constants/categories';
 
-export const Post = ({ handleCloseModal }) => {
+export const PostModal = ({ handleCloseModal }) => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [price, setPrice] = useState('');
   const [selectedImages, setSelectedImages] = useState([]);
@@ -102,5 +102,5 @@ export const Post = ({ handleCloseModal }) => {
   );
 };
 
-export default Post;
+export default PostModal;
 

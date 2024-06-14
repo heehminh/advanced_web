@@ -1,14 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { HeartOutlined, HeartFilled } from "@ant-design/icons";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation, Pagination } from "swiper";
 import "swiper/scss";
 import "swiper/scss/navigation";
 import "swiper/scss/pagination";
-import { loginAtom } from "../../../recoil/atom";
-import { useRecoilValue } from "recoil";
-import styled from "styled-components";
-import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 
@@ -16,7 +12,6 @@ SwiperCore.use([Navigation, Pagination]);
 
 const Article = ({ typeIndex }) => {
   const [displayedRooms, setDisplayedRooms] = useState([]);
-  const isLogin = useRecoilValue(loginAtom);
   const [roomList, setRoomList] = useState([]);
 
   const toggleLike = async (id) => {
@@ -59,7 +54,7 @@ const Article = ({ typeIndex }) => {
             room;
 
           return (
-            <div className="room__item" key={id} onClick={()=>navigate(`/room/${id}`)}>
+            <div className="room__item" key={id} onClick={()=>navigate(`/stay/${id}`)}>
               <Swiper
                 className="room__item__imgBox"
                 spaceBetween={50}
@@ -79,7 +74,7 @@ const Article = ({ typeIndex }) => {
                 )}
               </Swiper>
 
-              {!like || !isLogin ? (
+              {!like ? (
                 <HeartOutlined
                   className="room__unlike"
                   onClick={() => toggleLike(id)}
