@@ -1,12 +1,15 @@
 import React from "react";
 import styled from "styled-components";
+import { useNavigate } from 'react-router-dom';
 
 const StartButton = ({ showStartButton }) => {
+  const navigate = useNavigate();
+
   return showStartButton ? (
-    <Start>
+    <Start onClick={()=>navigate('/')}>
       <Button>
         <Icon>☖</Icon>
-        <div>에어비앤비 스타트</div>
+        <div>여행집 스타트</div>
       </Button>
     </Start>
   ) : (
@@ -24,7 +27,7 @@ const Start = styled.div`
 const Button = styled.div`
   width: 200px;
   height: 48px;
-  background-color: rgb(255, 56, 92);
+  background-color: #58CCFF;
   font-size: 18px;
   font-weight: 600;
   color: white;

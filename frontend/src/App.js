@@ -6,6 +6,8 @@ import { Host } from "./pages/Host";
 import { Detail } from "./pages/Detail";
 import SignUp from "./components/Auth/SignUp";
 import Login from "./components/Auth/Login";
+import MyPosts from "./components/Post/MyPost";
+import MyBooking from "./components/Home/Book/MyBooking";
 
 const App = () => {
 
@@ -15,38 +17,12 @@ const App = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<SignUp />} />
       <Route path="/stay/:id" element={<Detail />} />
-      {/* <Route path="account" element={<HomeAccount />} /> */}
+      <Route path="my-posts" element={<MyPosts />} />
       <Route path="host" element={<Host />} />
+      <Route path="book" element={<MyBooking />} />
       <Route path="*" element={<h1>NotFound</h1>} />
     </Routes>
   );
 };
 
 export default App;
-
-// const HomeAccount = ({ login }) => {
-//   return login ? (
-//     <div>
-//       <Home />
-//       <Account LoginWrapper={LoginWrapper} />
-//     </div>
-//   ) : (
-//     <div>
-//       <Home />
-//       <LoginWrapper>
-//         <LoginModal />
-//       </LoginWrapper>
-//     </div>
-//   );
-// };
-
-// const LoginWrapper = styled.div`
-//   background-color: white;
-//   padding: 24px;
-//   border-radius: 8px;
-//   width: 600px;
-//   margin-top: 100px;
-//   position: fixed;
-//   left: 35%;
-//   top: 15%;
-// `;

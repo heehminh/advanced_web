@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { HeartOutlined, HeartFilled } from "@ant-design/icons";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation, Pagination } from "swiper";
 import "swiper/scss";
@@ -13,26 +12,17 @@ SwiperCore.use([Navigation, Pagination]);
 const Article = ({ typeIndex }) => {
   const [displayedRooms, setDisplayedRooms] = useState([]);
   const [roomList, setRoomList] = useState([]);
-
-  const toggleLike = async (id) => {
-    const updatedRoomList = roomList.map((room) => {
-      if (room.id === id) {
-        return { ...room, like: !room.like };
-      }
-      return room;
-    });
-
-    await axios.patch(`/roomList/${id}`, {
-      like: !roomList[id].like,
-    });
-    setRoomList(updatedRoomList);
-  };
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
-      .get("/roomList")
-      .then((res) => setRoomList(res.data))
-      .catch((error) => console.log(error));
+      .get("http://localhost:3000/post")
+      .then((res) => {
+        setRoomList(res.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching posts:', error);
+      });
   }, []);
 
   useEffect(() => {
@@ -44,17 +34,14 @@ const Article = ({ typeIndex }) => {
     setDisplayedRooms(filteredRooms);
   }, [typeIndex, roomList]);
 
-  const navigate = useNavigate();
-
   return (
     <article className="room">
-      {roomList && roomList.length > 0 ? (
+      {displayedRooms && displayedRooms.length > 0 ? (
         displayedRooms.map((room) => {
-          const { id, like, img, loc, star, plus, when, price, standard } =
-            room;
+          const { id, photos, address, category, price, description } = room;
 
           return (
-            <div className="room__item" key={id} onClick={()=>navigate(`/stay/${id}`)}>
+            <div className="room__item" key={id}>
               <Swiper
                 className="room__item__imgBox"
                 spaceBetween={50}
@@ -63,10 +50,12 @@ const Article = ({ typeIndex }) => {
                 pagination={{ clickable: true }}
                 loop
               >
-                {img && img.length > 0 ? (
-                  img.map((src, index) => (
+                {Array.isArray(photos) && photos.length > 0 ? (
+                  photos.map((src, index) => (
                     <SwiperSlide key={index}>
-                      <img className="imgBox" src={src} alt="imgBox" />
+                      <img 
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                        key={index} src={`http://localhost:3000${src}`} alt="image" onClick={() => navigate(`/stay/${id}`)} />
                     </SwiperSlide>
                   ))
                 ) : (
@@ -74,27 +63,14 @@ const Article = ({ typeIndex }) => {
                 )}
               </Swiper>
 
-              {!like ? (
-                <HeartOutlined
-                  className="room__unlike"
-                  onClick={() => toggleLike(id)}
-                />
-              ) : (
-                <HeartFilled
-                  className="room__like"
-                  onClick={() => toggleLike(id)}
-                />
-              )}
-
               <div className="room__item__textBox">
                 <div className="textBox__1">
-                  <div className="textBox__1__loc">{loc}</div>
-                  <div className="textBox__1__star">★ {star}</div>
+                  <div className="textBox__1__loc">{address}</div>
+                  <div className="textBox__1__star">★ {category}</div>
                 </div>
-                <div className="textBox__2">{plus}</div>
-                <div className="textBox__2">{when}</div>
+                <div className="textBox__2">{description}</div>
                 <div className="textBox__3">
-                  ₩{price?.toLocaleString("ko-KR") ?? "loading..."} / {standard}
+                  ₩{price?.toLocaleString("ko-KR") ?? "loading..."} /박
                 </div>
               </div>
             </div>

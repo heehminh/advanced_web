@@ -7,7 +7,7 @@ import StartButton from "../atoms/StartButton";
 const Intro = () => {
   const [city, setCity] = useState("");
   const mapElement = useRef(null);
-
+  
   // 컴포넌트가 마운트될때 수동으로 스크립트를 넣어줌
   // script보다 window.initMap이 먼저 선언되도록
   const loadScript = useCallback((url) => {
@@ -248,7 +248,7 @@ const Intro = () => {
     initMap();
   };
 
-  // 에어비앤비가 수입을 산정하는 방법 - 모달창
+  // 모달창
   const [showModal, setShowModal] = useState(false);
 
   const handleOpenModal = () => {
@@ -270,7 +270,7 @@ const Intro = () => {
         <Description>
           <Title>
             <Text>당신의 공간을</Text>
-            <Text>에어비앤비하세요.</Text>
+            <Text>여행집하세요.</Text>
           </Title>
           <Income>
             <IncomeTitle>예상 수입</IncomeTitle>
@@ -294,8 +294,9 @@ const Intro = () => {
               />
             </div>
             <div>
-              <IncomeWay onClick={handleOpenModal}>
-                에어비앤비가 예상 수입을 산정하는 방법
+              <IncomeWay
+                onClick={handleOpenModal}>
+                여행집이 예상 수입을 산정하는 방법
               </IncomeWay>
 
               {showModal && (
@@ -309,12 +310,12 @@ const Intro = () => {
                     <ModalBody>
                       <Wrapper>
                         <div className="text-32 font-bold mb-15">
-                          에어비앤비가 예상 수입을
+                          여행집이 예상 수입을
                           <br />
                           산정하는 방법
                         </div>
                         <div>
-                          에어비앤비는 비슷한 에어비앤비 숙소의 지난 12개월간
+                          여행집은 비슷한 여행집 숙소의 지난 12개월간
                           예약 데이터를 검토하여 예상 수입을 계산합니다. 비슷한
                           숙소는 숙소에 대해 알려주신 정보를 바탕으로
                           선정됩니다. 숙소 주소를 입력하면 가까운 거리에 있는
@@ -323,14 +324,14 @@ const Intro = () => {
                           수입 기준 상위 50% 숙소를 기준으로 한 예상 수입이
                           표시됩니다. <br />
                           <br />
-                          에어비앤비는 비슷한 숙소를 기준으로 평균 1박 수입을
+                          여행집은 비슷한 숙소를 기준으로 평균 1박 수입을
                           예상한 후 여기에 호스트가 호스팅할 예정이라고 표시한
-                          숙박 일수를 곱합니다. 또한, 그달에 모든 에어비앤비
+                          숙박 일수를 곱합니다. 또한, 그달에 모든 여행집
                           숙소가 매일 예약 가능하다는 가정하에 해당 지역의 한 달
                           평균 예약 일수를 안내해드립니다. (1박당 호스팅 수입은
                           각 호스트가 정한 요금에서{" "}
                           <u>
-                            <strong>에어비앤비 호스트 서비스 수수료</strong>
+                            <strong>여행집 호스트 서비스 수수료</strong>
                           </u>
                           를 제외한 금액으로, 세금 또는 호스팅 비용은 공제되지
                           않습니다.)
@@ -357,7 +358,7 @@ const Intro = () => {
 
             <Search>
               <SearchIcon
-                src="http://localhost:3000/assets/home-search.png"
+                src="http://localhost:3001/assets/home-search.png"
                 alt="search-icon"
               />
               <div>
@@ -462,7 +463,7 @@ const Description = styled.div`
 `;
 
 const Title = styled.div`
-  color: rgb(255, 56, 92);
+  color: #58CCFF;
   font-size: 48px;
   font-weight: 700;
   display: flex;
@@ -505,7 +506,7 @@ const IncomeWay = styled.div`
   margin-top: 20px;
   border-bottom: 1px solid rgb(113, 113, 113);
   font-size: 14px;
-  color: rgb(113, 113, 113);
+  color: black;
   cursor: pointer;
 `;
 
@@ -541,7 +542,7 @@ const SearchCity = styled.div`
 const SearchDetail = styled.div`
   font-size: 16px;
   font-weight: 400;
-  color: rgb(113, 113, 113);
+  color: black;
 `;
 
 const Map = styled.div`

@@ -20,7 +20,8 @@ export const Login = () => {
         isAuthenticated: true,
         user: response.data.user,
       });
-      console.log(response);
+
+      localStorage.setItem('user', response.data.user.id);
       localStorage.setItem('auth_token', response.data.token);
       reset();
       navigate('/');

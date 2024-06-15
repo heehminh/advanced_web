@@ -1,55 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import axios from "axios";
-import { useQuery } from "react-query";
+import { typeList } from "../../../constants/categories";
 
-const Type = ({ setTypeIndex, setClick }) => {
-  const [activeTypeItemId, setActiveTypeItemId] = useState(null);
-
-  const handleTypeItemClick = (typeIdx) => {
-    setActiveTypeItemId(typeIdx);
-    setTypeIndex(typeIdx);
-    setClick(false);
-  };
-
-  const { isLoading, isError, data, error } = useQuery(
-    "typeList",
-    async () => {
-      try {
-        const response = await axios.get("/typeList");
-        return response.data;
-      } catch (error) {
-        throw new Error(error.message);
-      }
-    },
-    {
-      refetchOnWindowFocus: false,
-      retry: 0,
-      onSuccess: (data) => {
-        console.log(data);
-      },
-      onError: (e) => {
-        console.log(e.message);
-      },
-    }
-  );
-
-  if (isLoading) {
-    return <span>Loading...</span>;
-  }
-
-  if (isError) {
-    return <span>Error: {error.message}</span>;
-  }
+const Type = () => {
 
   return (
     <Wrapper>
       <TypeWrapper>
-        {data.map((type, index) => (
+        {typeList.map((type, index) => (
           <TypeItem
             key={index}
-            className={activeTypeItemId === type.type_idx ? "active" : ""}
-            onClick={() => handleTypeItemClick(type.type_idx)}
           >
             <TypeItemIcon src={type.type_imgSrc} alt="type" />
             <TypeItemDescription>{type.type_description}</TypeItemDescription>

@@ -31,12 +31,21 @@ const Header = () => {
       </SearchBar>
       <Setting>
         <SettingDescription onClick={() => navigate(`../host`)}>
-          당신의 공간을 에어비엔비하세요
+          당신의 공간을 여행집하세요
         </SettingDescription>
         <SettingIcon>
-          <SettingIconImg alt="setting" src="../assets/home-setting.png" />
+          <div className="cursor-pointer flex mr-10" onClick={()=>navigate('../book')}>
+            예약
+          </div>
         </SettingIcon>
-        <SettingProfile onClick={()=>navigate('../login')}>
+        <SettingProfile onClick={() => {
+          const token = localStorage.getItem('auth_token');
+          if (token) {
+            navigate('/my-posts');
+          } else {
+            navigate('/login');
+          }
+        }}>
           <div>
             <img
               alt="profile list"
@@ -97,7 +106,7 @@ const SearchBarButton = styled.button`
 const Setting = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
 `;
 

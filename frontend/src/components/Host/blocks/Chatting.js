@@ -12,7 +12,7 @@ const Chatting = () => {
       <Chat>
         <ChatTitle>
           가까운 곳에 있는 슈퍼호스트의 도움을 <br />
-          받아 당신의 공간을 에어비앤비하세요.
+          받아 당신의 공간을 여행집하세요.
         </ChatTitle>
         <ChatButton />
       </Chat>

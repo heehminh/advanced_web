@@ -5,7 +5,7 @@ import StartButton from "../atoms/StartButton";
 const Start = () => {
   return (
     <Wrapper>
-      <Title>에어비앤비 스타트로 쉽⁠게 에⁠어⁠비⁠앤⁠비⁠하⁠세⁠요</Title>
+      <Title>여행집 스타트로 쉽⁠게 여행집⁠하⁠세⁠요</Title>
       <Img
         src="https://a0.muscache.com/im/pictures/5dcdc471-a645-4a34-b06d-3cb84e9c15c5.jpg?im_w=2560&im_q=highq"
         alt="슈퍼호스트이미지"
@@ -14,7 +14,7 @@ const Start = () => {
         <Des>
           <DTitle>슈퍼호스트의 일대일 지원</DTitle>
           <DText>
-            에어비앤비가 숙소 운영 경험이 풍부한 슈퍼호스트와 연결해드립니다.
+            여행집이 숙소 운영 경험이 풍부한 슈퍼호스트와 연결해드립니다.
             전화, 화상 통화 또는 채팅을 통해 한국어로 호스팅에 대한 궁금증을
             해결하고 첫 게스트를 맞이하는 방법도 배우실 수 있어요. 물론 무료로
             제공됩니다.
@@ -23,12 +23,12 @@ const Start = () => {
         <Des>
           <DTitle>첫 예약에서 경험이 풍부한 게스트를 맞이하는 옵션</DTitle>
           <DText>
-            에어비앤비에서 최소 3건의 숙박을 완료하고 평점이 좋은 게스트를 첫
+            여행집에서 최소 3건의 숙박을 완료하고 평점이 좋은 게스트를 첫
             게스트로 맞이하도록 선택할 수 있습니다
           </DText>
         </Des>
         <Des>
-          <DTitle>에어비앤비의 특별 지원</DTitle>
+          <DTitle>여행집의 특별 지원</DTitle>
           <DText>
             신규 호스트는 터치 한 번으로 특별 교육을 받은 고객지원 상담원과
             연결되어 계정 문제부터 대금 수령까지 모든 방면에서 도움을 받을 수
