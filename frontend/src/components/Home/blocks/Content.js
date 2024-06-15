@@ -2,7 +2,6 @@ import axios from "axios";
 import React from "react";
 import { useQuery } from "react-query";
 import Article from "./Article";
-import Footer from "./Footer";
 import Map from "./Map";
 
 const Content = ({ click, typeIndex }) => {
@@ -50,7 +49,6 @@ const Content = ({ click, typeIndex }) => {
       <div>
         <div id="content">
           <Article className="room" click={click} typeIndex={typeIndex} />
-          <Footer id="footer" />
         </div>
       </div>
     );

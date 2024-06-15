@@ -4,18 +4,6 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        lat: {
-            type: DataTypes.FLOAT,
-            allowNull: false,
-        },
-        lng: {
-            type: DataTypes.FLOAT,
-            allowNull: true,
-        },
-        like: {
-            type: DataTypes.BOOLEAN,
-            allowNull: false,
-        },
         category: {
             type: DataTypes.STRING,
             allowNull: true,
@@ -42,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
 
     Post.associate = (models) => {
         Post.belongsTo(models.User, { foreignKey: 'userId', as: 'User' });
-        Post.hasMany(models.Like, { foreignKey: 'postId', as: 'Likes' });
+        Post.hasMany(models.Book, { foreignKey: 'postId', as: 'Books' });
     };
 
     return Post;

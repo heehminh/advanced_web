@@ -1,33 +1,92 @@
 const express = require('express');
-const path = require('path');
-const { Post, User, Like } = require('../models'); 
+const { Post, User, Book } = require('../models');
 const { isAuthenticated } = require('../middlewares/auth');
-const upload = require('../middlewares/upload');
+const upload = require('../middlewares/upload'); // 파일 업로드 미들웨어
+const fs = require('fs');
+const path = require('path');
 
 const router = express.Router();
 
-// 게시글 작성
-router.post('/create', isAuthenticated, upload.array('images', 10), async (req, res, next) => {
+// 이미지 base64인코딩
+const encodeFileToBase64 = (filePath) => {
+  const bitmap = fs.readFileSync(filePath);
+  return Buffer.from(bitmap).toString('base64');
+};
+
+// POST /create: 숙소 생성
+router.post('/create', isAuthenticated, upload.array('photos', 10), async (req, res, next) => {
   try {
-    const { title, content } = req.body;
+    const { address, category, price, description } = req.body;
     const userId = req.user.id;
-    const imageUrls = req.files.map(file => `/uploads/${file.filename}`);
+    const photos = req.files.map(file => `/uploads/${file.filename}`);
 
     const post = await Post.create({
-      title,
-      content,
-      imageUrls: JSON.stringify(imageUrls), // 이미지 URL을 JSON 문자열로 저장
+      address,
+      category,
+      price,
+      description,
+      photos, 
       userId,
     });
 
     res.status(201).json(post);
   } catch (error) {
-    console.error('Error creating post:', error.message);
+    console.error(error.message);
     next(error);
   }
 });
 
-// 모든 게시글 조회 
+// /:id/edit-post: id로 숙소 수정
+router.put('/:id/edit-post', isAuthenticated, upload.array('photos', 10), async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { address, category, price, description, existingPhotos } = req.body;
+    const userId = req.user.id;
+
+    const post = await Post.findOne({ where: { id, userId } });
+    if (!post) {
+      return res.status(404).json({ message: 'Post not found or you are not authorized to edit this post' });
+    }
+
+    // 기존 photos 데이터 처리
+    let updatedPhotos;
+    try {
+      updatedPhotos = typeof post.photos === 'string' ? JSON.parse(post.photos) : post.photos;
+    } catch (e) {
+      updatedPhotos = [];
+    }
+
+    // 새로 업로드된 이미지 URL 추가
+    if (req.files && req.files.length > 0) {
+      const newPhotos = req.files.map(file => ({
+        path: `/uploads/${file.filename}`,
+        base64: encodeFileToBase64(file.path)
+      }));
+      updatedPhotos = [...updatedPhotos, ...newPhotos];
+    }
+
+    // 기존 이미지 중 유지할 이미지를 필터링
+    if (existingPhotos) {
+      updatedPhotos = updatedPhotos.filter(photo => existingPhotos.includes(photo.path));
+    }
+
+    // 게시글 정보 업데이트
+    await post.update({
+      address: address || post.address,
+      category: category || post.category,
+      price: price || post.price,
+      description: description || post.description,
+      photos: JSON.stringify(updatedPhotos),
+    });
+
+    res.status(200).json(post);
+  } catch (error) {
+    console.error('Error updating post:', error.message);
+    next(error);
+  }
+});
+
+// GET /: 모든 숙소 목록 
 router.get('/', async (req, res, next) => {
   try {
     const posts = await Post.findAll({
@@ -37,12 +96,7 @@ router.get('/', async (req, res, next) => {
         as: 'User',
       }],
     });
-    // 이미지 URL을 JSON 파싱
-    posts.forEach(post => {
-      if (typeof post.imageUrls === 'string') {
-        post.imageUrls = JSON.parse(post.imageUrls);
-      }
-    });
+
     res.status(200).json(posts);
   } catch (error) {
     console.error('Error fetching posts:', error.message);
@@ -58,16 +112,11 @@ router.get('/myposts', isAuthenticated, async (req, res, next) => {
       where: { userId },
       include: [{
         model: User,
-        attributes: ['id', 'name'],
+        attributes: ['id', 'name', 'email'],
         as: 'User',
       }],
     });
-    // 이미지 URL을 JSON 파싱
-    posts.forEach(post => {
-      if (typeof post.imageUrls === 'string') {
-        post.imageUrls = JSON.parse(post.imageUrls);
-      }
-    });
+
     res.status(200).json(posts);
   } catch (error) {
     console.error('Error fetching my posts:', error.message);
@@ -75,7 +124,7 @@ router.get('/myposts', isAuthenticated, async (req, res, next) => {
   }
 });
 
-// 특정 게시글 조회 
+// id로 숙소정보 조회
 router.get('/:id', async (req, res, next) => {
   try {
     const post = await Post.findByPk(req.params.id, {
@@ -85,13 +134,11 @@ router.get('/:id', async (req, res, next) => {
         as: 'User',
       }]
     });
+
     if (!post) {
       return res.status(404).json({ message: 'Post not found' });
     }
-    // 이미지 URL을 JSON 파싱
-    if (typeof post.imageUrls === 'string') {
-      post.imageUrls = JSON.parse(post.imageUrls);
-    }
+
     res.status(200).json(post);
   } catch (error) {
     console.error('Error fetching post:', error.message);
@@ -99,31 +146,7 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
-// 게시글의 이미지 삭제 
-router.post('/:id/delete-images', isAuthenticated, async (req, res, next) => {
-  try {
-    const postId = req.params.id;
-    const { images } = req.body;
-    
-    const post = await Post.findByPk(postId);
-    if (!post) {
-      return res.status(404).json({ message: 'Post not found' });
-    }
-
-    const existingImages = JSON.parse(post.imageUrls);
-    const updatedImages = existingImages.filter(image => !images.includes(image));
-
-    post.imageUrls = JSON.stringify(updatedImages);
-    await post.save();
-
-    res.status(200).json(post);
-  } catch (error) {
-    console.error('Error deleting images:', error.message);
-    next(error);
-  }
-});
-
-// 게시글 삭제 
+// DELETE /:id 숙소 삭제
 router.delete('/:id', isAuthenticated, async (req, res, next) => {
   try {
     const postId = req.params.id;
@@ -131,17 +154,16 @@ router.delete('/:id', isAuthenticated, async (req, res, next) => {
 
     const post = await Post.findOne({ where: { id: postId, userId } });
     if (!post) {
-      return res.status(404).json({ message: 'Post not found or you are not authorized to delete this post' });
+      return res.status(404).json({ message: '사용자 인증 안됨' });
     }
 
-    // likes 테이블에서 관련 레코드 삭제
-    await Like.destroy({ where: { postId } });
+    await Book.destroy({ where: { postId } });
 
-    // 포스트 삭제
     await post.destroy();
     res.status(204).end();
+    
   } catch (error) {
-    console.error('Error deleting post:', error.message);
+    console.error(error.message);
     next(error);
   }
 });

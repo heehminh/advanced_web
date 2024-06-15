@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { typeList } from '../../constants/categories';
 
 const EditModal = ({ id, handleCloseModal }) => {
   const navigate = useNavigate();
   const [post, setPost] = useState({ address: '', description: '', category: '', price: '', photos: [] });
   const [newPhotos, setNewPhotos] = useState([]);
   const token = localStorage.getItem('auth_token');
+  const categories = typeList.map(item => item.type_description);
 
   useEffect(() => {
     if (!token) {
@@ -82,7 +84,14 @@ const EditModal = ({ id, handleCloseModal }) => {
         <div className='mt-5'>
           <label>카테고리</label>
           <div className='my-5 border-2 border-gray-200 w-full rounded-5 p-10'>
-            <input type="text" value={post.category} onChange={(e) => setPost({ ...post, category: e.target.value })} className='w-full' />
+            <select value={post.category} onChange={(e) => setPost({ ...post, category: e.target.value })} className='w-full'>
+              {categories.map(category => (
+                <option key={category} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
+
           </div>
         </div>
 

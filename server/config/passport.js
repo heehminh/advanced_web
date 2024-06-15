@@ -3,7 +3,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
 const { User } = require('../models');
 
-// 로컬 전략 설정
+// LocalStrategy
 passport.use(new LocalStrategy({
     usernameField: 'email',
     passwordField: 'password',

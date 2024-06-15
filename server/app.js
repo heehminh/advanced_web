@@ -13,11 +13,10 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 
-// Importing routes
+// routes
 const indexRouter = require('./routes/auth');
-// const userRouter = require('./routes/user');
 const postRouter = require('./routes/post');
-const likeRouter = require('./routes/like');
+const bookRouter = require('./routes/book');
 
 const app = express();
 app.set('port', process.env.PORT || 3000);
@@ -39,6 +38,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
+
 
 app.use(
   session({
@@ -65,7 +65,6 @@ app.use(cors({
 app.use(passport.initialize());
 app.use(passport.session());
 
-
 // JWT 토큰 인증 미들웨어
 app.use((req, res, next) => {
   const token = req.headers['authorization']?.split(' ')[1];
@@ -84,9 +83,8 @@ app.use((req, res, next) => {
 
 // Use routes
 app.use('/auth', indexRouter);
-// app.use('/user', userRouter);
 app.use('/post', postRouter);
-app.use('/like', likeRouter);
+app.use('/book', bookRouter);
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'frontend', 'build', 'index.html'));

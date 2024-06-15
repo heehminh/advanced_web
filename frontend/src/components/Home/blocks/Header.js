@@ -129,12 +129,6 @@ const SettingIcon = styled.div`
   align-items: center;
 `;
 
-const SettingIconImg = styled.img`
-  width: 18px;
-  height: 18px;
-  object-fit: contain;
-`;
-
 const SettingProfile = styled.div`
   display: flex;
   flex-direction: row;

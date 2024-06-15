@@ -6,7 +6,7 @@ module.exports = (passport) => {
   passport.use(new KakaoStrategy({
     clientID: process.env.KAKAO_ID,
     callbackURL: '/auth/kakao/callback',
-  }, async (accessToken, refreshToken, profile, done) => {
+  }, async (profile, done) => {
     try {
       // 카카오에서 제공하는 유저 정보를 이용하여 데이터베이스 조회 또는 생성
       const exUser = await User.findOne({ where: { kakaoId: profile.id, provider: 'kakao' } });

@@ -64,7 +64,7 @@ const MyPosts = () => {
     
 
     return (
-        <div>
+        <div className='bg-white'>
             <Header />
             
             <div className='flex flex-col m-40'>
@@ -113,8 +113,8 @@ const MyPosts = () => {
                                 <div className='cursor-pointer h-50 mr-10 w-100 border-logo-sky border-2 text-logo-sky font-semibold rounded-8 p-10 text-center'>
                                 <button onClick={handleOpenModal}>수정하기</button>
                                 </div>
-                                <div className='cursor-pointer h-50 w-100 bg-logo-sky text-white font-semibold rounded-8 p-10 text-center'>
-                                    <button onClick={deletePost}>삭제하기</button>
+                                <div className='cursor-pointer h-50 w-100 bg-logo-sky text-white font-semibold rounded-8 p-12 text-center'>
+                                    <button onClick={()=>deletePost(id)}>삭제하기</button>
                                 </div>
                             </div>
 
@@ -153,7 +153,7 @@ const ModalOverlay = styled.div`
   left: 0;
   bottom: 0;
   right: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.2);
   z-index: 1000;
   display: flex;
   flex-direction: column;

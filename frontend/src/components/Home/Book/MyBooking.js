@@ -43,7 +43,7 @@ const MyBooking = () => {
 
             <div className='flex flex-col m-40'>
                 <div className='text-40 font-bold '>내가 예약한 여행집 목록</div>
-                <div className='w-full flex flex-wrap items-start'>
+                <div className='w-full flex flex-wrap items-center'>
                     
 
                 {bookings && bookings.length > 0 ? (

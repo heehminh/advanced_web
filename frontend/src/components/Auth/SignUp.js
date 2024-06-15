@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 import { userState } from '../../recoil/atoms';
 
-
 export const SignUp = () => {
   const { register, handleSubmit, formState: { errors }, watch, reset } = useForm();
   const [error, setError] = useState('');
