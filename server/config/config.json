@@ -1,7 +1,7 @@
 {
     "development": {
       "username": "root",
-      "password": "min20903heE!",
+      "password": "1234",
       "database": "airbnb",
       "host": "127.0.0.1",
       "dialect": "mysql"
